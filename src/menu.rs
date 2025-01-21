@@ -1,11 +1,14 @@
 use std::io;
 
-use crossterm::{
-    event::{self, Event, KeyCode, KeyEvent, KeyEventKind},
-};
+use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
 
 use ratatui::{
-    buffer::Buffer, layout::Rect, style::Stylize, text::Line, widgets::{Block, Widget}, DefaultTerminal
+    buffer::Buffer,
+    layout::Rect,
+    style::Stylize,
+    text::Line,
+    widgets::{Block, Widget},
+    DefaultTerminal,
 };
 
 use crate::courses::Course;
@@ -37,9 +40,10 @@ impl Menu {
             terminal.draw(|frame| {
                 frame.render_widget(&self, frame.area());
             })?;
+
             if let Event::Key(key) = event::read()? {
                 self.handle_key(key);
-            };
+            }
         }
         Ok(())
     }
@@ -64,7 +68,11 @@ impl Widget for &Menu {
         let title = Line::from(" Canvas Modules TUI ".bold());
         let block = Block::bordered().title(title.centered());
 
-        self.page.render(block.inner(area), buf);
+        match self.page {
+            Page::Course => self.render_course(block.inner(area), buf),
+            Page::Module => todo!(),
+        }
+
         block.render(area, buf);
     }
 }

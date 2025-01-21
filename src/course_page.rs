@@ -1,12 +1,11 @@
-use ratatui::{buffer::Buffer, layout::Rect, widgets::{Paragraph, Widget}};
+use ratatui::{buffer::Buffer, layout::Rect};
 
-use crate::menu::Page;
+use crate::menu::Menu;
 
-impl Widget for &Page {
-    fn render(self, area: Rect, buf: &mut Buffer)
+impl Menu {
+    pub fn render_course(&self, area: Rect, buf: &mut Buffer)
     where
         Self: Sized,
     {
-        Paragraph::new("hi").render(area, buf);
     }
 }
