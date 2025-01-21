@@ -1,7 +1,12 @@
 use std::io;
 
-use crossterm::event::{self, Event, KeyCode, KeyEvent, KeyEventKind};
-use ratatui::{buffer::Buffer, layout::Rect, widgets::{Paragraph, Widget}, DefaultTerminal};
+use crossterm::{
+    event::{self, Event, KeyCode, KeyEvent, KeyEventKind},
+};
+
+use ratatui::{
+    buffer::Buffer, layout::Rect, style::Stylize, text::Line, widgets::{Block, Widget}, DefaultTerminal
+};
 
 use crate::courses::Course;
 
@@ -56,6 +61,10 @@ impl Widget for &Menu {
     where
         Self: Sized,
     {
-        Paragraph::new("HI").render(area, buf);
+        let title = Line::from(" Canvas Modules TUI ".bold());
+        let block = Block::bordered().title(title.centered());
+
+        self.page.render(block.inner(area), buf);
+        block.render(area, buf);
     }
 }
